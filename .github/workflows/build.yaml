@@ -268,15 +268,20 @@ jobs:
               echo "keyPassword=${{ secrets.KEY_PASSWORD }}"
             } >> android/local.properties
           else
+            # 兜底：未配置 Secrets 时生成【一次性】密钥，只为让构建能过。
+            # ★ 口令不硬编码 —— 公开仓库里硬编码口令 = 公开口令。
+            # ★ 每次构建密钥都不同 ⇒ 签名不一致 ⇒ 无法覆盖安装，仅供验证构建。
+            TMP_PW=$(head -c 32 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 24)
             keytool -genkeypair -v -keystore android/app/keystore.jks \
               -storetype PKCS12 -keyalg RSA -keysize 2048 -validity 10950 \
-              -alias maomao -storepass <redacted-pw> -keypass <redacted-pw> \
+              -alias maomao -storepass "$TMP_PW" -keypass "$TMP_PW" \
               -dname "CN=Maomao,O=Maomao,C=CN"
             {
               echo "keyAlias=maomao"
-              echo "storePassword=<redacted-pw>"
-              echo "keyPassword=<redacted-pw>"
+              echo "storePassword=$TMP_PW"
+              echo "keyPassword=$TMP_PW"
             } >> android/local.properties
+            echo "::warning::未配置 KEYSTORE Secret，已生成一次性密钥：签名不会一致，无法覆盖安装（仅供验证构建）"
           fi
 
       - name: Setup Go
