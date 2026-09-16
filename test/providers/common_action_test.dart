@@ -27,7 +27,7 @@ void main() {
     core = MockCoreHandlerInterface();
     globalState.packageInfo = PackageInfo(
       appName: 'FlClash',
-      packageName: 'com.follow.clash',
+      packageName: 'com.github.maomao',
       version: runningVersion,
       buildNumber: '1',
     );

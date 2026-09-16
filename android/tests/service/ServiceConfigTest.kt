@@ -1,9 +1,9 @@
-package com.follow.clash.service
+package com.github.maomao.service
 
-import com.follow.clash.common.AccessControlMode
-import com.follow.clash.service.models.AccessControlProps
-import com.follow.clash.service.models.NotificationParams
-import com.follow.clash.service.models.VpnOptions
+import com.github.maomao.common.AccessControlMode
+import com.github.maomao.service.models.AccessControlProps
+import com.github.maomao.service.models.NotificationParams
+import com.github.maomao.service.models.VpnOptions
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotSame

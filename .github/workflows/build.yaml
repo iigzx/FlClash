@@ -231,7 +231,7 @@ jobs:
         run: cargo test --manifest-path services/helper/Cargo.toml --features windows-service
 
   build:
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name == 'push'
     needs: [ dart, plugins, go, android, rust, windows-helper-test ]
     runs-on: ${{ matrix.os }}
     strategy:
@@ -239,24 +239,6 @@ jobs:
         include:
           - platform: android
             os: ubuntu-latest
-          - platform: windows
-            os: Windows-2022
-            arch: amd64
-          - platform: linux
-            os: ubuntu-22.04
-            arch: amd64
-          - platform: macos
-            os: macos-15-intel
-            arch: amd64
-          - platform: macos
-            os: macos-latest
-            arch: arm64
-          - platform: windows
-            os: windows-11-arm
-            arch: arm64
-          - platform: linux
-            os: ubuntu-24.04-arm
-            arch: arm64
 
     steps:
       - name: Setup rust
@@ -276,13 +258,24 @@ jobs:
       - name: Setup Android Signing
         if: startsWith(matrix.platform,'android')
         run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/keystore.jks
-          echo "${{ secrets.SERVICE_JSON }}" | base64 --decode > android/app/google-services.json
-          {
-            echo "keyAlias=${{ secrets.KEY_ALIAS }}"
-            echo "storePassword=${{ secrets.STORE_PASSWORD }}"
-            echo "keyPassword=${{ secrets.KEY_PASSWORD }}"
-          } >> android/local.properties
+          if [ -n "${{ secrets.KEYSTORE }}" ]; then
+            echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/keystore.jks
+            {
+              echo "keyAlias=${{ secrets.KEY_ALIAS }}"
+              echo "storePassword=${{ secrets.STORE_PASSWORD }}"
+              echo "keyPassword=${{ secrets.KEY_PASSWORD }}"
+            } >> android/local.properties
+          else
+            keytool -genkeypair -v -keystore android/app/keystore.jks \
+              -storetype PKCS12 -keyalg RSA -keysize 2048 -validity 10950 \
+              -alias maomao -storepass <redacted-pw> -keypass <redacted-pw> \
+              -dname "CN=Maomao,O=Maomao,C=CN"
+            {
+              echo "keyAlias=maomao"
+              echo "storePassword=<redacted-pw>"
+              echo "keyPassword=<redacted-pw>"
+            } >> android/local.properties
+          fi
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -347,6 +340,7 @@ jobs:
           overwrite: true
 
   upload:
+    if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: write
     needs: [ build ]

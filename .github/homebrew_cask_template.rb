@@ -28,12 +28,12 @@ cask "flclash" do
                    args: ["-rd", "com.apple.quarantine", "#{appdir}/FlClash.app"]
   end
 
-  uninstall quit: "com.follow.clash"
+  uninstall quit: "com.github.maomao"
 
   zap trash: [
-    "~/Library/Application Support/com.follow.clash",
-    "~/Library/Caches/com.follow.clash",
-    "~/Library/Preferences/com.follow.clash.plist",
-    "~/Library/Saved Application State/com.follow.clash.savedState",
+    "~/Library/Application Support/com.github.maomao",
+    "~/Library/Caches/com.github.maomao",
+    "~/Library/Preferences/com.github.maomao.plist",
+    "~/Library/Saved Application State/com.github.maomao.savedState",
   ]
 end

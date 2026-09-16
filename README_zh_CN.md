@@ -49,11 +49,11 @@ on Mobile:
 支持下列操作
 
    ```bash
-    com.follow.clash.action.START
+    com.github.maomao.action.START
     
-    com.follow.clash.action.STOP
+    com.github.maomao.action.STOP
     
-    com.follow.clash.action.TOGGLE
+    com.github.maomao.action.TOGGLE
    ```
 
 ## Download

@@ -1,4 +1,4 @@
-package com.follow.clash.common
+package com.github.maomao.common
 
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit

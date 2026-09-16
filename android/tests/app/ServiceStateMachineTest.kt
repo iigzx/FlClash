@@ -1,11 +1,11 @@
-package com.follow.clash
+package com.github.maomao
 
-import com.follow.clash.common.AccessControlMode
-import com.follow.clash.models.SetupParams
-import com.follow.clash.models.SharedState
-import com.follow.clash.service.models.AccessControlProps
-import com.follow.clash.service.models.NotificationParams
-import com.follow.clash.service.models.VpnOptions
+import com.github.maomao.common.AccessControlMode
+import com.github.maomao.models.SetupParams
+import com.github.maomao.models.SharedState
+import com.github.maomao.service.models.AccessControlProps
+import com.github.maomao.service.models.NotificationParams
+import com.github.maomao.service.models.VpnOptions
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -95,7 +95,7 @@ private class FakeHost(override val scope: CoroutineScope) : ServiceStateHost {
     var beforeStartService: (() -> Unit)? = null
 
     override var runTimeMillis = 0L
-    override val homeDirPath = "/data/user/0/com.follow.clash/files"
+    override val homeDirPath = "/data/user/0/com.github.maomao/files"
     override val sdkInt = 34
 
     val toasts = mutableListOf<String>()

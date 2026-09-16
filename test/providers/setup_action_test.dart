@@ -614,7 +614,7 @@ void main() {
         });
         globalState.packageInfo = PackageInfo(
           appName: 'FlClash',
-          packageName: 'com.follow.clash',
+          packageName: 'com.github.maomao',
           version: '0.0.0',
           buildNumber: '0',
         );

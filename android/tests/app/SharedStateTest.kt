@@ -1,6 +1,6 @@
-package com.follow.clash.models
+package com.github.maomao.models
 
-import com.follow.clash.common.AccessControlMode
+import com.github.maomao.common.AccessControlMode
 import com.google.gson.Gson
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
