@@ -6,6 +6,8 @@ on:
       - '**'
     tags:
       - 'v*'
+  # 手动触发：改过 Secrets / 想重跑而无需改代码时用
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
