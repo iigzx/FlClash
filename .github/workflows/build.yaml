@@ -239,8 +239,6 @@ jobs:
         include:
           - platform: android
             os: ubuntu-latest
-            # ★ 只出 arm64（否则 setup.dart 不传 --arch ⇒ 默认 arm+arm64+x64 三个 APK）
-            arch: arm64
 
     steps:
       - name: Setup rust
@@ -332,7 +330,7 @@ jobs:
       - name: Setup
         env:
           ANDROID_NDK_HOME: ${{ steps.build-ndk.outputs.ndk-path }}
-        run: dart setup.dart ${{ matrix.platform }} ${{ env.IS_STABLE == 'true' && '--env stable' || '' }} ${{ matrix.arch && format('--arch {0}', matrix.arch) || '' }} -v
+        run: dart setup.dart ${{ matrix.platform }} ${{ env.IS_STABLE == 'true' && '--env stable' || '' }} -v
 
       - name: Upload
         uses: actions/upload-artifact@v4
